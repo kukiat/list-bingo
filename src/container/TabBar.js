@@ -19,10 +19,11 @@ export default class TabBar extends Component{
     const pageNumber = this.state.pageNumber
     return (
       <div>
+        <a class="button is-dark">เพิ่มตอน</a>
         <div className="tabs">
           <ul>
-            <li className="is-active" onClick={ ()=>this.changePage(1) }><a>1-100</a></li>
-            <li className="" onClick={ ()=>this.changePage(2) }><a>101-200</a></li>
+            <li className= { pageNumber==1? "is-active" : "" } onClick={ ()=>this.changePage(1) }><a>1-100</a></li>
+            <li className= { pageNumber==2? "is-active" : "" } onClick={ ()=>this.changePage(2) }><a>101-200</a></li>
             <li className="" onClick={ ()=>this.changePage(3) }><a>201-300</a></li>
             <li className="" onClick={ ()=>this.changePage(4) }><a>301-400</a></li>
             <li className="" onClick={ ()=>this.changePage(5) }><a>401-500</a></li>
