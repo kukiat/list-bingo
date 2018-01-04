@@ -1,8 +1,14 @@
 .checkbox-list-disable{
   color: brown;
+  font-size: 16px;
+  font-family:"Helvetica Neue";
 }
 
 .main-container{
   margin-top: 20px;
   margin-left: 80px;
+}
+
+.size-box{
+  width: 170px;
 }
