@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import CheckBox from '../component/CheckBox'
+import firebase from 'firebase'
+
 export default class TabBar extends Component{
   constructor() {
     super()
@@ -7,6 +9,13 @@ export default class TabBar extends Component{
       pageNumber: 1
     }
     this.changePage = this.changePage.bind(this)
+  }
+
+  componentDidMount() {
+    const ref = firebase.database().ref('/list')
+    ref.on('value', (s)=>{
+      console.log(s.val())
+    })
   }
 
   changePage(page) {
@@ -19,7 +28,7 @@ export default class TabBar extends Component{
     const pageNumber = this.state.pageNumber
     return (
       <div>
-        <a class="button is-dark">เพิ่มตอน</a>
+        <a className="button is-dark">เพิ่มตอน</a>
         <div className="tabs">
           <ul>
             <li className= { pageNumber==1? "is-active" : "" } onClick={ ()=>this.changePage(1) }><a>1-100</a></li>
