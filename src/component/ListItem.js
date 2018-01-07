@@ -1,12 +1,10 @@
 import React from 'react'
 
-export default function ListItem() {
+export default function ListItem({item}) {
   return (
-    <p className="subtitle"> 
-      <label className="checkbox checkbox-list-disable">
-        <input type="checkbox"/> 11 11/01/2015
-      </label>
-    </p>
+    <label className="checkbox checkbox-list-disable">
+      <input type="checkbox"/> {item.ep} {item.date.day}/{item.date.month}/{item.date.year}
+    </label>
   )
 }
 

@@ -5,27 +5,26 @@ export default class DashBoard extends Component{
   static defaultProps = {
     listEp: []
   }
+
   render() {
-    const {listEp} = this.props || []
-    // let item = new Array(parseInt(listEp.length/25)+1)
-    // listEp.map((ep,i)=>{
-    //   let pList = []
-    //   listEp.map((ep, index)=>{
-    //     if(index%100==0 && index!=0) pList= []  
-    //     pList.push(ep)
-    //     item[parseInt(index/100)] = pList
-    //   })
-    // })
-    console.log(listEp)
+    const {listEp} = this.props
+    let item = new Array(Math.ceil(listEp.length/20))
+    let pList = []
+    listEp.map((ep,i)=>{
+      if(i%20==0 && i!=0) pList= []  
+      pList.push(ep)
+      item[parseInt(i/20)] = pList
+    })
+  
     return(
       <div className="columns">
-          <div className="column is-2"><Narrow/></div>
-          <div className="column is-2"><Narrow/></div>
-          <div className="column is-2"><Narrow/></div>
-          <div className="column is-2"><Narrow /></div>
-          <div className="column is-2"><Narrow /></div>
-          
-        </div>
+        {item.map((i,index)=>
+          <div className="column is-2">
+            <Narrow rowItem={i}/>
+          </div>
+         )
+        }
+      </div>
     )
   }
 }
