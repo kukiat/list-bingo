@@ -5,7 +5,7 @@ export default class DashBoard extends Component{
   static defaultProps = {
     listEp: []
   }
-
+  
   render() {
     const {listEp} = this.props
     let item = new Array(Math.ceil(listEp.length/20))
@@ -20,7 +20,7 @@ export default class DashBoard extends Component{
       <div className="columns">
         {item.map((i,index)=>
           <div className="column is-2">
-            <Narrow rowItem={i}/>
+            <Narrow key={i+index} rowItem={i}/>
           </div>
          )
         }

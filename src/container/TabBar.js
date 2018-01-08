@@ -3,13 +3,9 @@ import DashBoard from './DashBoard'
 import firebase from 'firebase'
 
 export default class TabBar extends Component{
-  constructor() {
-    super()
-    this.state = {
-      pageNumber: 0,
-      listEp: []
-    }
-    this.changePage = this.changePage.bind(this)
+  state = {
+    pageNumber: 0,
+    listEp: []
   }
 
   componentDidMount() {
@@ -26,7 +22,7 @@ export default class TabBar extends Component{
     })
   }
 
-  changePage(page) {
+  changePage = (page) => {
     this.setState({
       pageNumber: page
     })

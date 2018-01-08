@@ -3,12 +3,15 @@
   font-size: 16px;
   font-family:"Helvetica Neue";
 }
-
+.checkbox-list-enable{
+  color: red;
+  font-size: 16px;
+  font-family:"Helvetica Neue";
+}
 .main-container{
   margin-top: 20px;
   margin-left: 80px;
 }
-
 .size-box{
   width: 170px;
 }
