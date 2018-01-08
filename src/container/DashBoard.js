@@ -10,8 +10,10 @@ export default class DashBoard extends Component{
     const {listEp} = this.props
     let item = new Array(Math.ceil(listEp.length/20))
     let pList = []
-    listEp.map((ep,i)=>{
-      if(i%20==0 && i!=0) pList= []  
+    listEp.map((ep, i)=>{
+      if(i%20==0 && i!=0) {
+        pList= []
+      }  
       pList.push(ep)
       item[parseInt(i/20)] = pList
     })
@@ -20,7 +22,7 @@ export default class DashBoard extends Component{
       <div className="columns">
         {item.map((i,index)=>
           <div className="column is-2">
-            <Narrow key={i+index} rowItem={i}/>
+            <Narrow key={index} rowItem={i}/>
           </div>
          )
         }

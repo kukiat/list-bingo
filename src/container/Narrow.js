@@ -1,5 +1,4 @@
 import React,{Component} from 'react'
-import CheckBoxItem from '../component/CheckBoxItem'
 import firebase from 'firebase'
 
 export default class Narrow extends Component {
@@ -20,16 +19,9 @@ export default class Narrow extends Component {
   render() {
     const { rowItem } = this.props
     const allListItem = rowItem.map((item) => (
-      <label key={item.ep} className={item.status?"checkbox checkbox-list-disable":"checkbox checkbox-list-enable"}>
-        {
-          item.status?
-          <input type="checkbox" onClick={ ()=>this.changeStatus(item.ep) } checked/> :
-          <input type="checkbox" onClick={ ()=>this.changeStatus(item.ep) } /> 
-        }
-        {item.ep} {item.date.day}/{item.date.month}/{item.date.year}
-        
-      </label>
-      
+      <label onClick={()=>this.changeStatus(item.ep)} key={item.ep} className={item.status?"checkbox checkbox-list-disable":"checkbox checkbox-list-enable "}>
+        EP {item.ep} {item.date.day}/{item.date.month}/{item.date.year}
+      </label> 
     )
     )
     return (
