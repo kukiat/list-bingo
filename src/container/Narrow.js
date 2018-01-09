@@ -6,20 +6,10 @@ export default class Narrow extends Component {
     rowItem: []
   }
 
-  changeStatus = (ep) => {
-    let key = ep-1
-    let status
-    const ref = firebase.database().ref('/list/'+key).child('status')
-    ref.on('value', (s)=>{
-      status = s.val()
-    })
-    ref.set(!status) 
-  }
-
   render() {
     const { rowItem } = this.props
     const allListItem = rowItem.map((item) => (
-      <label onClick={()=>this.changeStatus(item.ep)} key={item.ep} className={item.status?"checkbox checkbox-list-disable":"checkbox checkbox-list-enable "}>
+      <label onClick={()=>this.props.changeStatus(item.ep)} key={item.ep} className={item.status?"checkbox checkbox-list-disable":"checkbox checkbox-list-enable "}>
         EP {item.ep} {item.date.day}/{item.date.month}/{item.date.year}
       </label> 
     )

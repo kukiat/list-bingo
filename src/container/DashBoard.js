@@ -21,7 +21,7 @@ export default class DashBoard extends Component{
       <div className="columns">
         {item.map((i,index)=>
           <div className="column is-2">
-            <Narrow key={index} rowItem={i}/>
+            <Narrow changeStatus={this.props.changeStatus} key={index} rowItem={i}/>
           </div>
          )
         }

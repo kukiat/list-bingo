@@ -9,7 +9,7 @@ class TabBar extends Component {
     pageNumber: 0,
     listEp: [],
     page: [],
-    allData:[]
+    textSearch:''
   }
 
   componentDidMount() {
@@ -33,8 +33,15 @@ class TabBar extends Component {
       item[parseInt(index/100)] = pList
     })
     const tab = []
-    for(let i=0; i<Math.ceil(listData.length / 100);i++) 
-      tab.push({detail: `${i*100+1}-${i*100+100}`})
+    const tabLength = Math.ceil(listData.length / 100)
+    for(let i=0; i<tabLength; i++){
+      if(i==tabLength-1){
+        tab.push({detail: `${i*100+1}-${listData.length}`})
+      }else{
+        tab.push({detail: `${i*100+1}-${i*100+100}`})
+      }
+    }
+      
     return {item, tab}
   }
 
@@ -43,15 +50,24 @@ class TabBar extends Component {
   }
 
   handleSearch = (text) => {
-    const resultDataSearch =[]
-    if(text === '') {
-      this.setState({ 
-        listEp: this.state.allData.item,
-        page:this.state.allData.tab
+    const dataWithQuery = this.querySearch(text)
+    const data = this.modifyData(dataWithQuery)
+    this.setState({ 
+      listEp: data.item,
+      page: data.tab,
+      textSearch:text
+    })
+  }
+
+  querySearch(text) {
+    let resultDataSearch =[]    
+    const ref = firebase.database().ref('/list')    
+    if(text === ''){
+      ref.on('value', (s)=>{
+        resultDataSearch = s.val()
       })
-    }else {
-      const ref = firebase.database().ref('/list')
-      ref.on('value',(s)=>{
+    }else{
+      ref.on('value', (s)=>{
         s.val().map((item)=>{
           const day = item.date.day.toString()
           const month = item.date.month.toString()
@@ -61,13 +77,20 @@ class TabBar extends Component {
             resultDataSearch.push(item)
           }
         })
-        const data = this.modifyData(resultDataSearch)
-        this.setState({ 
-          listEp: data.item,
-          page: data.tab
-        })
       })
     }
+    return resultDataSearch
+  }
+
+  changeStatus = (ep) => {
+    let key = ep-1
+    let status
+    const ref = firebase.database().ref('/list/'+key).child('status')
+    ref.on('value', (s)=>{
+      status = s.val()
+    })
+    ref.set(!status)
+    this.handleSearch(this.state.textSearch)
   }
 
   render() {
@@ -86,7 +109,7 @@ class TabBar extends Component {
             {allTabBar}
           </ul>
         </div>
-        <DashBoard listEp={listEp[pageNumber]} {...this.props}/>
+        <DashBoard listEp={listEp[pageNumber]} changeStatus={this.changeStatus}/>
         
       </div>
     )
