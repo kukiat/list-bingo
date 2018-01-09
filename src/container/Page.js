@@ -3,8 +3,9 @@ import React, { Component } from 'react'
 
 import DashBoard from './DashBoard'
 import SearchBar from './SearchBar'
+import TabBar from './TabBar'
 
-class TabBar extends Component {
+class Page extends Component {
   state = {
     pageNumber: 0,
     listEp: [],
@@ -55,7 +56,8 @@ class TabBar extends Component {
     this.setState({ 
       listEp: data.item,
       page: data.tab,
-      textSearch:text
+      textSearch: text,
+      pageNumber: 0
     })
   }
 
@@ -95,25 +97,16 @@ class TabBar extends Component {
 
   render() {
     const { pageNumber, listEp, page } = this.state
-    const allTabBar = page.map((data, index)=>
-      <li key={data.detail} className= { pageNumber===index? "is-active" : "" } onClick={ ()=>this.changePage(index) }>
-        <a>{data.detail}</a>
-      </li>
-    )
+    console.log('page')
     return (
       <div>
         <a className="button is-dark">เพิ่มตอน</a>
         <SearchBar handleSearch={this.handleSearch}/>
-        <div className="tabs">
-          <ul>
-            {allTabBar}
-          </ul>
-        </div>
-        <DashBoard listEp={listEp[pageNumber]} changeStatus={this.changeStatus}/>
-        
+        <TabBar page={page} pageNumber={pageNumber} changePage={this.changePage}/>
+        <DashBoard listEp={listEp[pageNumber]} changeStatus={this.changeStatus}/>  
       </div>
     )
   }
 }
 
-export default TabBar
+export default Page
