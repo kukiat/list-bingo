@@ -8,7 +8,8 @@ class TabBar extends Component {
   state = {
     pageNumber: 0,
     listEp: [],
-    page: []
+    page: [],
+    allData:[]
   }
 
   componentDidMount() {
@@ -17,7 +18,8 @@ class TabBar extends Component {
       const data = this.modifyData(s.val())
       this.setState({ 
         listEp: data.item,
-        page: data.tab
+        page: data.tab,
+        allData: data
       })
     })
   }
@@ -42,24 +44,30 @@ class TabBar extends Component {
 
   handleSearch = (text) => {
     const resultDataSearch =[]
-    const ref = firebase.database().ref('/list')
-    ref.on('value',(s)=>{
-      s.val().map((item)=>{
-        const day = item.date.day.toString()
-        const month = item.date.month.toString()
-        const year = item.date.year.toString()
-        const ep = item.ep.toString()
-        if(text === day || text === month || text === year || text=== ep) {
-          resultDataSearch.push(item)
-        }
-      })
-      const data = this.modifyData(resultDataSearch)
+    if(text === '') {
       this.setState({ 
-        listEp: data.item,
-        page: data.tab
+        listEp: this.state.allData.item,
+        page:this.state.allData.tab
       })
-    })
-    
+    }else {
+      const ref = firebase.database().ref('/list')
+      ref.on('value',(s)=>{
+        s.val().map((item)=>{
+          const day = item.date.day.toString()
+          const month = item.date.month.toString()
+          const year = item.date.year.toString()
+          const ep = item.ep.toString()
+          if(text === day || text === month || text === year || text=== ep) {
+            resultDataSearch.push(item)
+          }
+        })
+        const data = this.modifyData(resultDataSearch)
+        this.setState({ 
+          listEp: data.item,
+          page: data.tab
+        })
+      })
+    }
   }
 
   render() {
