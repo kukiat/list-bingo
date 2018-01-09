@@ -1,8 +1,10 @@
-import React, { Component } from 'react'
-import DashBoard from './DashBoard'
 import firebase from 'firebase'
+import React, { Component } from 'react'
 
-export default class TabBar extends Component{
+import DashBoard from './DashBoard'
+import SearchBar from './SearchBar'
+
+class TabBar extends Component {
   state = {
     pageNumber: 0,
     listEp: [],
@@ -32,6 +34,10 @@ export default class TabBar extends Component{
     this.setState({ pageNumber: page })
   }
 
+  handleSearch = (text) => {
+    console.log(text)
+  }
+
   render() {
     const { pageNumber, listEp, page } = this.state
     const allTabBar = page.map((data, index)=>
@@ -42,14 +48,17 @@ export default class TabBar extends Component{
     return (
       <div>
         <a className="button is-dark">เพิ่มตอน</a>
+        <SearchBar handleSearch={this.handleSearch}/>
         <div className="tabs">
           <ul>
             {allTabBar}
           </ul>
         </div>
         <DashBoard listEp={listEp[pageNumber]} {...this.props}/>
+        
       </div>
     )
   }
 }
 
+export default TabBar

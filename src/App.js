@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import TabBar from './container/TabBar'
+import Page from './container/Page'
 
 class App extends Component {
   render() {
     return (
       <div className="main-container">
-        <TabBar />
+        <Page />
       </div>
       
     );

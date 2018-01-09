@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+
 import Narrow from './Narrow'
 
 export default class DashBoard extends Component{
@@ -10,10 +11,8 @@ export default class DashBoard extends Component{
     const {listEp} = this.props
     let item = new Array(Math.ceil(listEp.length/20))
     let pList = []
-    listEp.map((ep, i)=>{
-      if(i%20==0 && i!=0) {
-        pList= []
-      }  
+    listEp.map((ep, i) => {
+      if(i%20==0 && i!=0) pList= []
       pList.push(ep)
       item[parseInt(i/20)] = pList
     })
