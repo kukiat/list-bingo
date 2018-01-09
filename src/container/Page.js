@@ -14,20 +14,26 @@ class TabBar extends Component {
   componentDidMount() {
     const ref = firebase.database().ref('/list')
     ref.on('value', (s)=>{
-      let item = new Array(parseInt(s.val().length/100)+1)
-      let pList = []
-      s.val().map((ep, index)=>{
-        if(index%100==0 && index!=0) pList= [] 
-        pList.push(ep)
-        item[parseInt(index/100)] = pList
-      })
-      const tab = []
-      for(let i=0; i<Math.ceil(s.val().length / 100);i++) tab.push({detail: `${i*100+1}-${i*100+100}`})
+      const data = this.modifyData(s.val())
       this.setState({ 
-        listEp: item,
-        page: tab
+        listEp: data.item,
+        page: data.tab
       })
     })
+  }
+
+  modifyData(listData) {
+    let item = new Array(parseInt(listData.length/100)+1)
+    let pList = []
+    listData.map((ep, index)=>{
+      if(index%100==0 && index!=0) pList= [] 
+      pList.push(ep)
+      item[parseInt(index/100)] = pList
+    })
+    const tab = []
+    for(let i=0; i<Math.ceil(listData.length / 100);i++) 
+      tab.push({detail: `${i*100+1}-${i*100+100}`})
+    return {item, tab}
   }
 
   changePage = (page) => {
@@ -35,7 +41,25 @@ class TabBar extends Component {
   }
 
   handleSearch = (text) => {
-    console.log(text)
+    const resultDataSearch =[]
+    const ref = firebase.database().ref('/list')
+    ref.on('value',(s)=>{
+      s.val().map((item)=>{
+        const day = item.date.day.toString()
+        const month = item.date.month.toString()
+        const year = item.date.year.toString()
+        const ep = item.ep.toString()
+        if(text === day || text === month || text === year || text=== ep) {
+          resultDataSearch.push(item)
+        }
+      })
+      const data = this.modifyData(resultDataSearch)
+      this.setState({ 
+        listEp: data.item,
+        page: data.tab
+      })
+    })
+    
   }
 
   render() {
