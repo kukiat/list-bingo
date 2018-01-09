@@ -42,7 +42,6 @@ class Page extends Component {
         tab.push({detail: `${i*100+1}-${i*100+100}`})
       }
     }
-      
     return {item, tab}
   }
 
@@ -84,7 +83,7 @@ class Page extends Component {
     return resultDataSearch
   }
 
-  changeStatus = (ep) => {
+  queryStatus = (ep) => {
     let key = ep-1
     let status
     const ref = firebase.database().ref('/list/'+key).child('status')
@@ -92,12 +91,20 @@ class Page extends Component {
       status = s.val()
     })
     ref.set(!status)
-    this.handleSearch(this.state.textSearch)
+  }
+
+  changeStatus = (ep) => {
+    this.queryStatus(ep)
+    const dataWithQuery = this.querySearch(this.state.textSearch)
+    const data = this.modifyData(dataWithQuery)
+    this.setState({ 
+      listEp: data.item,
+      page: data.tab,
+    })
   }
 
   render() {
     const { pageNumber, listEp, page } = this.state
-    console.log('page')
     return (
       <div>
         <a className="button is-dark">เพิ่มตอน</a>
