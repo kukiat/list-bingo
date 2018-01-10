@@ -1,12 +1,15 @@
+body{
+  font-family: 'Mitr', sans-serif !important;
+  margin: 0;
+  padding: 0;
+}
 .checkbox-list-disable{
-  color: red;
-  font-size: 16px;
+  font-size: 18px;
   font-family:"Helvetica Neue";
   text-decoration:line-through;
 }
 .checkbox-list-enable{
-  color: blue;
-  font-size: 16px;
+  font-size: 18px;
   font-family:"Helvetica Neue";
 }
 .main-container{
@@ -19,4 +22,7 @@
 .mgt20{
   margin-top: 20px;
   width: 20%;
+}
+.mgl-20{
+  margin-left: 25px;
 }

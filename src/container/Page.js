@@ -1,9 +1,12 @@
+import { Tabs, Button } from 'antd';
 import firebase from 'firebase'
 import React, { Component } from 'react'
-import { Button } from 'antd';
+
 import DashBoard from './DashBoard'
 import SearchBar from './SearchBar'
 import TabBar from './TabBar'
+
+const TabPane = Tabs.TabPane;
 
 class Page extends Component {
   state = {
@@ -107,11 +110,14 @@ class Page extends Component {
     const { pageNumber, listEp, page } = this.state
     return (
       <div>
-        <Button type="primary">เพิ่มตอน</Button>
-        <a className="button is-dark">เพิ่มตอน</a>
         <SearchBar handleSearch={this.handleSearch}/>
-        <TabBar page={page} pageNumber={pageNumber} changePage={this.changePage}/>
-        <DashBoard listEp={listEp[pageNumber]} changeStatus={this.changeStatus}/>  
+        <TabBar 
+          page={page} 
+          pageNumber={pageNumber} 
+          changePage={this.changePage}
+          listEp={listEp[pageNumber]} 
+          changeStatus={this.changeStatus}
+        />  
       </div>
     )
   }

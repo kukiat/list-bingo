@@ -1,14 +1,18 @@
 import React,{Component} from 'react'
+import { Input } from 'antd';
+const Search = Input.Search;
 
 class SearchBar extends Component {
-  
   render() {
     return (
-      <div className="field mgt20">
-        <div className="control">
-          <input onChange={ (e)=>this.props.handleSearch(e.target.value) } className="input" type="text" placeholder="Search Episode" />
-        </div>
-      </div>
+      <Search
+        placeholder="Search Episode"
+        onChange={ (e)=>this.props.handleSearch(e.target.value) }
+        style={{ 
+          width: 300,
+          height: 30
+        }}
+      />
     )
   }
 }

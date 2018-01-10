@@ -1,4 +1,5 @@
 import React,{Component} from 'react'
+import {Card, Row, Col, Tag} from 'antd'
 import firebase from 'firebase'
 
 export default class Narrow extends Component {
@@ -8,19 +9,28 @@ export default class Narrow extends Component {
 
   render() {
     const { rowItem } = this.props
-    const allListItem = rowItem.map((item) => (
-      <label onClick={()=>this.props.changeStatus(item.ep)} key={item.ep} className={item.status?"checkbox checkbox-list-disable":"checkbox checkbox-list-enable "}>
+    const allListItem = rowItem.map((item) => 
+      <Tag 
+        key={item.ep}
+        color={item.status? "magenta": "blue"}
+        onClick={()=>this.props.changeStatus(item.ep)} 
+        className={item.status? "checkbox-list-disable": "checkbox-list-enable "}
+        style={{
+          width:127,
+          height:20,
+          fontSize:14,
+          marginTop:4
+        }}
+      >
         EP {item.ep} {item.date.day}/{item.date.month}/{item.date.year}
-      </label> 
-    )
+      </Tag>
     )
     return (
-      <div className="column is-narrow">
-        <div className="box size-box">
-          <p className="title is-6"> { rowItem[0].ep }-{ rowItem[rowItem.length-1].ep } </p>
+      <Col className="gutter-row" span={4}>
+        <Card title="Card title" style={{ width: 180 }}>
           { allListItem }
-        </div>
-      </div>
+        </Card>
+      </Col>
     )
   }
 }

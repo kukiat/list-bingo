@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
-
 import Narrow from './Narrow'
-
+import {Row} from 'antd'
 export default class DashBoard extends Component{
   static defaultProps = {
     listEp: []
@@ -18,13 +17,13 @@ export default class DashBoard extends Component{
     })
   
     return(
-      <div className="columns">
-        {item.map((i,index)=>
-          <div className="column is-2">
+      <div className="gutter-example mgl-20">
+        <Row gutter={50}>
+          {item.map((i,index)=>
             <Narrow changeStatus={this.props.changeStatus} key={index} rowItem={i}/>
-          </div>
-         )
-        }
+          )
+          }
+        </Row>
       </div>
     )
   }

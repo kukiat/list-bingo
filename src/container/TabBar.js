@@ -1,22 +1,34 @@
 import React, {Component} from 'react'
+import { Tabs, Button } from 'antd';
+import DashBoard from './DashBoard'
+
+const TabPane = Tabs.TabPane;
 
 class TabBar extends Component {
   static defaultProps = {
     page: []
   }
   render() {
-    const { pageNumber, page, changePage} = this.props
+    const { 
+      pageNumber, 
+      page, 
+      changePage,
+      listEp,
+      changeStatus
+    } = this.props
     const allTabBar = page.map((data, index)=>
-      <li key={data.detail} className= { pageNumber===index? "is-active" : "" } onClick={ ()=>changePage(index) }>
-        <a>{data.detail}</a>
-      </li>
+      <TabPane 
+        tab={data.detail} 
+        aria-selected={ pageNumber===index? "true" : "false" } 
+        key={index} 
+      >
+        <DashBoard listEp={listEp} changeStatus={changeStatus}/>
+      </TabPane>
     )
     return (
-      <div className="tabs">
-        <ul>
-          {allTabBar}
-        </ul>
-      </div>
+      <Tabs onChange={ (page)=>changePage(page)}>
+        {allTabBar}
+      </Tabs>
     )
   }
 }
