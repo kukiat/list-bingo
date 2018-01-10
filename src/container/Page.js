@@ -1,12 +1,8 @@
-import { Tabs, Button } from 'antd';
 import firebase from 'firebase'
 import React, { Component } from 'react'
 
-import DashBoard from './DashBoard'
 import SearchBar from './SearchBar'
 import TabBar from './TabBar'
-
-const TabPane = Tabs.TabPane;
 
 class Page extends Component {
   state = {

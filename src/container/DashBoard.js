@@ -1,13 +1,15 @@
-import React, {Component} from 'react'
-import Narrow from './Narrow'
 import {Row} from 'antd'
+import React, {Component} from 'react'
+
+import CardEp from './CardEp'
+
 export default class DashBoard extends Component{
   static defaultProps = {
     listEp: []
   }
   
   render() {
-    const {listEp} = this.props
+    const { listEp } = this.props
     let item = new Array(Math.ceil(listEp.length/20))
     let pList = []
     listEp.map((ep, i) => {
@@ -20,7 +22,7 @@ export default class DashBoard extends Component{
       <div className="gutter-example mgl-20">
         <Row gutter={50}>
           {item.map((i,index)=>
-            <Narrow changeStatus={this.props.changeStatus} key={index} rowItem={i}/>
+            <CardEp changeStatus={this.props.changeStatus} key={index} rowItem={i}/>
           )
           }
         </Row>

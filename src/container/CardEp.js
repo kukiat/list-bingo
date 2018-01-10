@@ -1,8 +1,7 @@
+import {Card, Col, Tag} from 'antd'
 import React,{Component} from 'react'
-import {Card, Row, Col, Tag} from 'antd'
-import firebase from 'firebase'
 
-export default class Narrow extends Component {
+export default class CardEp extends Component {
   static defaultProps = {
     rowItem: []
   }
@@ -11,7 +10,7 @@ export default class Narrow extends Component {
     const { rowItem } = this.props
     const allListItem = rowItem.map((item) => 
       <Tag 
-        key={item.ep}
+        key={ item.ep }
         color={item.status? "magenta": "blue"}
         onClick={()=>this.props.changeStatus(item.ep)} 
         className={item.status? "checkbox-list-disable": "checkbox-list-enable "}

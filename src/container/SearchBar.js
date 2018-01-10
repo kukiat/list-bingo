@@ -1,5 +1,6 @@
-import React,{Component} from 'react'
 import { Input } from 'antd';
+import React,{Component} from 'react'
+
 const Search = Input.Search;
 
 class SearchBar extends Component {

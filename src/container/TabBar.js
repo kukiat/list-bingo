@@ -1,5 +1,6 @@
+import { Tabs } from 'antd';
 import React, {Component} from 'react'
-import { Tabs, Button } from 'antd';
+
 import DashBoard from './DashBoard'
 
 const TabPane = Tabs.TabPane;
@@ -18,11 +19,11 @@ class TabBar extends Component {
     } = this.props
     const allTabBar = page.map((data, index)=>
       <TabPane 
-        tab={data.detail} 
-        aria-selected={ pageNumber===index? "true" : "false" } 
-        key={index} 
+        tab={ data.detail } 
+        aria-selected={ pageNumber===index ? "true" : "false" } 
+        key={ index } 
       >
-        <DashBoard listEp={listEp} changeStatus={changeStatus}/>
+        <DashBoard listEp={listEp} changeStatus={ changeStatus }/>
       </TabPane>
     )
     return (
