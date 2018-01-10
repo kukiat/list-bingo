@@ -1,8 +1,8 @@
 import firebase from 'firebase'
 import React, { Component } from 'react'
 
-import SearchBar from './SearchBar'
-import TabBar from './TabBar'
+import SearchBar from '../component/SearchBar'
+import TabBar from '../component/TabBar'
 
 class Page extends Component {
   state = {
