@@ -25,9 +25,15 @@ export default class Narrow extends Component {
         EP {item.ep} {item.date.day}/{item.date.month}/{item.date.year}
       </Tag>
     )
+    const cardTitle = `${rowItem[0].ep}-${rowItem[rowItem.length-1].ep}`
     return (
       <Col className="gutter-row" span={4}>
-        <Card title="Card title" style={{ width: 180 }}>
+        <Card 
+          title={cardTitle} 
+          style={{ 
+            width: 180 
+          }}
+        >
           { allListItem }
         </Card>
       </Col>
