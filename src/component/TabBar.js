@@ -24,7 +24,7 @@ function TabBar(props) {
   )
 
   return (
-    <Tabs onChange={ (page)=>changePage(page)}>
+    <Tabs onChange={ (page)=>changePage(page)} animated={false}>
       {allTabBar}
     </Tabs>
   )
