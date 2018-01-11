@@ -62,7 +62,8 @@ class Page extends Component {
   querySearch(text) {
     let resultDataSearch =[]    
     const ref = firebase.database().ref('/list')    
-    if(text === ''){
+    
+    if(this.isBlank(text)){
       ref.on('value', (s)=>{
         resultDataSearch = s.val()
       })
@@ -80,6 +81,10 @@ class Page extends Component {
       })
     }
     return resultDataSearch
+  }
+
+  isBlank = (str) => {
+    return (!str || 0 === str.length || /^\s*$/.test(str))
   }
 
   queryStatus = (ep) => {
