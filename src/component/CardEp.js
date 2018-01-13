@@ -7,7 +7,7 @@ export default function CardEp(props){
     <Tag 
       key={ item.ep }
       color={item.status? "magenta": "blue"}
-      onClick={() => props.changeStatus(item.ep)} 
+      onClick={() => props.changeStatus(item.id)} 
       className={item.status? "checkbox-list-disable": "checkbox-list-enable "}
       style={{
         width:130,
