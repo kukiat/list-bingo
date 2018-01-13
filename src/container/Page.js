@@ -74,15 +74,16 @@ class Page extends Component {
       })
     }else{
       ref.on('value', (s)=>{
-        s.val().map((item)=>{
-          const day = item.date.day.toString()
-          const month = item.date.month.toString()
-          const year = item.date.year.toString()
-          const ep = item.ep.toString()
+        const item = s.val()
+        for(let i in item){
+          const day = item[i].date.day.toString()
+          const month = item[i].date.month.toString()
+          const year = item[i].date.year.toString()
+          const ep = item[i].ep.toString()
           if(text === day || text === month || text === year || text=== ep) {
-            resultDataSearch.push(item)
+            resultDataSearch.push(item[i])
           }
-        })
+        }
       })
     }
     return resultDataSearch
