@@ -16,8 +16,11 @@ export default function DashBoard(props){
   return(
     <div className="gutter-example mgl-20">
       <Row gutter={50}>
-        {item.map((i,index)=>
-          <CardEp changeStatus={changeStatus} key={i.id} rowItem={i}/>
+        {item.map((i,index)=>{
+          return (
+            <CardEp changeStatus={changeStatus} key={i.id} rowItem={i}/>
+          )
+        }
         )
         }
       </Row>

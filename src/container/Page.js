@@ -25,28 +25,24 @@ class Page extends Component {
   }
 
   modifyData(data) {
-    const listData = []
-    for(let i in data) {
-      listData.push(data[i])
-    }
+    const listData = Object.keys(data).map((key) => Object.assign(data[key], { id: key }))
     let item = new Array(parseInt(listData.length/100)+1)
     let pList = []
-    listData.map((ep, index)=>{
-      
+    listData.map((ep, index) => {
       if(index%100==0 && index!=0) pList= [] 
       pList.push(ep)
       item[parseInt(index/100)] = pList
     })
     const tab = []
     const tabLength = Math.ceil(listData.length / 100)
-    for(let i=0; i<tabLength; i++){
-      if(i==tabLength-1){
+    for(let i=0; i<tabLength; i++) {
+      if(i==tabLength-1) {
         tab.push({detail: `${i*100+1}-${listData.length}`})
       }else{
         tab.push({detail: `${i*100+1}-${i*100+100}`})
       }
     }
-    return {item, tab}
+    return { item, tab }
   }
 
   changePage = (page) => {
@@ -65,53 +61,40 @@ class Page extends Component {
   }
 
   querySearch(text) {
-    let resultDataSearch =[]    
+    let resultDataSearch = {}  
     const ref = firebase.database().ref('/list')    
-    
     if(this.isBlank(text)){
-      ref.on('value', (s)=>{
-        resultDataSearch = s.val()
-      })
+      ref.on('value', (s) => resultDataSearch = s.val())
     }else{
       ref.on('value', (s)=>{
-        const item = s.val()
-        for(let i in item){
-          const day = item[i].date.day.toString()
-          const month = item[i].date.month.toString()
-          const year = item[i].date.year.toString()
-          const ep = item[i].ep.toString()
-          if(text === day || text === month || text === year || text=== ep) {
-            resultDataSearch.push(item[i])
-          }
-        }
+        const value = s.val()
+        Object.keys(value).map((key)=>{
+          const item = value[key]
+          const day = item.date.day.toString()
+          const month = item.date.month.toString()
+          const year = item.date.year.toString()
+          const ep = item.ep.toString()
+          if(text === day || text === month || text === year || text=== ep) 
+            resultDataSearch[key] = item
+        })
       })
     }
     return resultDataSearch
   }
 
   isBlank = (str) => {
-    return (!str || 0 === str.length || /^\s*$/.test(str))
+    return (0 === str.length || /^\s*$/.test(str))
   }
 
-  queryStatus = (id) => {
-    let key = id
+  updateStatus = (id) => {
     let status
-    let keyId
-    const ref = firebase.database().ref('/list')
-
-    ref.on('value', (s)=>{
-      s.forEach((item)=>{
-        if(key == item.val().id){
-          keyId = item.key
-          status = item.val().status
-        }
-      })
-    })
-    firebase.database().ref('/list/' + keyId).child('status').set(!status)
+    const ref = firebase.database().ref('/list/'+id).child('status')
+    ref.on('value', (s) => status = s.val())
+    ref.set(!status)
   }
 
-  changeStatus = (ep) => {
-    this.queryStatus(ep)
+  changeStatus = (id) => {
+    this.updateStatus(id)
     const dataWithQuery = this.querySearch(this.state.textSearch)
     const data = this.modifyData(dataWithQuery)
     this.setState({ 
@@ -121,7 +104,6 @@ class Page extends Component {
   }
 
   addEp = () => {
-    
     const ref = firebase.database().ref('/list')
     let id = 0
     let month = 0
@@ -129,12 +111,8 @@ class Page extends Component {
     let day = 0
     let ep =0
     ref.once('value', (s)=>{
-      const data = s.val()
-      let lastEp
-      for(let i in data) {
-        lastEp = data[i]
-      }
-      id = lastEp.id + 1
+      const value = s.val()
+      let lastEp = Object.values(value)[Object.keys(value).length-1]
       month = lastEp.date.month
       day = lastEp.date.day
       year = lastEp.date.year
@@ -168,23 +146,14 @@ class Page extends Component {
         year+=1
       }
     })
-    const newEp = { 
+    ref.push({ 
       status: false,
       date : {
         month,year,day
       },
-      ep,
-      id
-    }
-    ref.push(newEp)
-    ref.on('value', (s)=>{
-      const data = this.modifyData(s.val())
-      this.setState({ 
-        listEp: data.item,
-        page: data.tab,
-      })
+      ep
     })
-    
+    this.setState({ textSearch: '' }) 
   }
 
   render() {
